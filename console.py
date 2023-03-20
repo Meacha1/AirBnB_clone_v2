@@ -112,19 +112,61 @@ class HBNBCommand(cmd.Cmd):
     def emptyline(self):
         """ Overrides the emptyline method of CMD """
         pass
+    def do_create(self, arg):
+        """
+        Create a new instance of a class with given parameters.
+        Usage: create <Class name> <param 1> <param 2> <param 3>...
+               Param syntax: <key name>=<value>
+               Value syntax: String: "<value>" => starts with a double quote
+                             any double quote inside the value must be escaped with a backslash \
+                             all underscores _ must be replace by spaces. Example: name="My_little_house"
+                             Float: <unit>.<decimal> => contains a dot .
+                             Integer: <number> => default case
+        """
+        params = arg.split()
+        if len(params) < 2:
+            print("Usage: create <Class name> <param 1> <param 2> <param 3>...")
+            return
 
-    def do_create(self, args):
-        """ Create an object of any class"""
-        if not args:
-            print("** class name missing **")
+        class_name = params[0]
+        if not class_name.isidentifier():
+            print(f"Error: Invalid class name '{class_name}'")
             return
-        elif args not in HBNBCommand.classes:
-            print("** class doesn't exist **")
+
+        try:
+            cls = globals()[class_name]
+        except KeyError:
+            print(f"Error: Class '{class_name}' not found")
             return
-        new_instance = HBNBCommand.classes[args]()
-        storage.save()
-        print(new_instance.id)
-        storage.save()
+
+        kwargs = {}
+        for param in params[1:]:
+            if '=' not in param:
+                continue
+            key, value = param.split('=', 1)
+            if not key.isidentifier():
+                print(f"Error: Invalid parameter name '{key}'")
+                continue
+            if value.startswith('"') and value.endswith('"'):
+                value = value[1:-1].replace('_', ' ')
+                value = value.encode('unicode_escape').decode()
+            else:
+                try:
+                    value = int(value)
+                except ValueError:
+                    try:
+                        value = float(value)
+                    except ValueError:
+                        print(f"Error: Invalid value '{value}' for parameter '{key}'")
+                        continue
+            kwargs[key] = value
+
+        try:
+            obj = cls(**kwargs)
+            self._objects.append(obj)
+            print(f"Created instance of '{class_name}' with ID {id(obj)}")
+        except TypeError:
+            print(f"Error: Invalid parameters for class '{class_name}'")
 
     def help_create(self):
         """ Help information for the create method """
