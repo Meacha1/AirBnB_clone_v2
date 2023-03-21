@@ -117,7 +117,11 @@ class HBNBCommand(cmd.Cmd):
         return False
 
     def do_create(self, args):
+<<<<<<< HEAD
         """ Create an object of any class"""
+=======
+        """ Create an object of any class """
+>>>>>>> e93dc9151806a379aefd8345efbc70224a3ef0cf
         ignored_attrs = ('id', 'created_at', 'updated_at', '__class__')
         class_name = ''
         name_pattern = r'(?P<name>(?:[a-zA-Z]|_)(?:[a-zA-Z]|\d|_)*)'
