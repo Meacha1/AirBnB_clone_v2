@@ -18,6 +18,12 @@ class FileStorage:
                 if type(value) is cls:
                     class_dict[key] = value
             return class_dict
+    def delet(self, obj=None):
+        """Delets an object from the storage"""
+        if obj is not None:
+            obj_key - obj.to_dict()['__class__'] + '.' + obj.id
+            if obj_key in self.__objects.key():
+                del self.__objects[obj_key]
 
     def new(self, obj):
         """Adds new object to storage dictionary"""
