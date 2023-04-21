@@ -35,7 +35,7 @@ def python(text):
 @app.route('/number/<int:n>', strict_slashes=False)
 def number(n):
     '''The number page'''
-        return "{} is a number".format(n)
+    return "{} is a number".format(n)
 
 
 if __name__ == "__main__":
