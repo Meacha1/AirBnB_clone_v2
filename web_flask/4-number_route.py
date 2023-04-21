@@ -32,10 +32,9 @@ def python(text):
     return "Python {}".format(text.replace('_', ' '))
 
 
-@app.route('/number/<n>', strict_slashes=False)
+@app.route('/number/<int:n>', strict_slashes=False)
 def number(n):
     '''The number page'''
-    if n.isdigit():
         return "{} is a number".format(n)
 
 
