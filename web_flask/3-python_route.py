@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-'''a script that starts a Flask web application.
+'''A script that starts a Flask web application.
 '''
 
 from flask import Flask
@@ -25,8 +25,8 @@ def c(text):
     return "C {}".format(text.replace('_', ' '))
 
 
-@app.route('/python/<text>', strict_slashes=False)
-@app.route('/python/', default={'text': 'is cool'})
+@app.route('/python/(<text>)', strict_slashes=False)
+@app.route('/python/', defaults={'text': 'is cool'})
 def python(text):
     '''The python page'''
     return "Python {}".format(text.replace('_', ' '))
