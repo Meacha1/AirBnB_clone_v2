@@ -1,7 +1,9 @@
 #!/usr/bin/python3
-'''test'''
-from flask import Flask
-from models import storage, render_template
+'''A simple Flask web application.'''
+from flask import Flask, render_template
+
+from models import storage
+from models.state import 
 
 app = Flask(__name__)
 
