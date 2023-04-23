@@ -6,13 +6,17 @@ from models import storage
 
 app = Flask(__name__)
 
+
 @app.route('/cities_by_states', strict_slashes=False)
 def cities_by_states():
     unsoretd_states = storage.all('State')
     states = sorted(unsoted_states.values(), key=lambda x: x.name)
     unsoted_cities = storage.all('City')
     cities = sorted(unsoted_cities.values(), key=lambda x: x.name)
-    return render_template('8-cities_by_states.html', states=states, cities=cities)
+    return render_template(
+            '8-cities_by_states.html', states=states, cities=cities
+            )
+
 
 @app.teardown_appcontext
 def teardown(self):
